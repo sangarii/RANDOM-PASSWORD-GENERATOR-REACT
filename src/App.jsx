@@ -6,6 +6,7 @@ const App = () => {
   const [generatePassword, setGeneratePassword] = useState("");
   const [showToast, setShowToast] = useState(false);
   const [hideToast, sethideToast] = useState(false);
+  const[error, setError]=useState("");
 
   const handleGeneratePassword = useCallback(() => {
     const length = Number(password);
@@ -14,10 +15,11 @@ const App = () => {
     let randomPassword = "";
 
     if (length <= 0) {
-      alert("Please enter positive number");
+      setError("Enter a valid password length");
       setGeneratePassword("");
       return;
     }
+    setError("")
 
     for (let i = 0; i < length; i++) {
       const randomIndex = Math.floor(Math.random() * chars.length);
@@ -64,6 +66,7 @@ useEffect(() => {
           />
           <button onClick={handleGeneratePassword}>Generate</button>
         </div>
+          {error && <p className="err-msg">{error}</p>}
 
         <input
           type="text"
